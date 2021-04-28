@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Lab.Models.Course>
+
+<div>
+    <div class="form-group">
+
+        <select id="selectCrs" class="form-control"
+                asp-items="@(new SelectList(Model,"Id", "CourseName"))">
+            <option selected disabled>Choose Course</option>
+        </select>
+
+    </div>
+    <div class="student">
+
+    </div>
+
+</div>
+
+<script>
+        $(function () {
+            $('#selectCrs').on('change', function (e) {
+
+                $.ajax({
+                    url: "/Course/GetStudentCourseForDegree/" + e.target.value + "?deptId=@ViewBag.deptId",
+                    success: function (result) {
+
+                        $('.student').html(result);
+                    },
+                    type: "get"
+                });
+
+            });
+
+        })
+</script>

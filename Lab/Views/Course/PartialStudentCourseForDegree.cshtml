@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Lab.Models.StudentCourse>
+
+<table class="table table-bordered w-100 text-center">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+               Mansage Degree
+            </th>
+           
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.student.Name
+                </td>
+                <td>
+                    <div class="row ml-1 mr-1">
+                        <input class=" deg form-control col" asp-for="@item.degree" disabled />
+                        <input type="checkbox" class="form-control col" />
+
+
+
+                        <button class="btn btn-info col" id="@item">change</button>
+                        <span id="@item.StudentId" class="d-none"></span>
+                        <span id="@item.CourseId" class="d-none"></span>
+                    </div>
+                        
+               </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+<script>
+    $(function () {
+
+        $('input[type=checkbox]').on('click', function () {
+            if ($(this).prop("checked")) {
+                $(this).siblings("input").attr("disabled", false)
+            } else {
+                $(this).siblings("input").attr("disabled", true)
+            }
+   
+        })
+        $('button').on('click', function (e) {
+
+           
+            $.ajax({
+
+                url: "/Course/AddDegree",
+                data: {
+                    'StudentId': $(this).siblings("span")[0].id,
+                    'CourseId': $(this).siblings("span")[1].id,
+                    'degree': $(this).siblings('.deg').val()
+                },
+                success: function (result) {
+
+                    location.reload();
+                },
+                type: "post"
+            });
+        });
+
+    })
+</script>

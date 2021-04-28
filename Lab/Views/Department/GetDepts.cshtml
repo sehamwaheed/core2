@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Lab.Models.Department>
+
+@{
+    ViewData["Title"] = "GetDepts";
+}
+
+<h1>GetDepts</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div>
+    <div class="form-group">
+
+        <select class="form-control"
+                asp-items="@(new SelectList(Model,"Id", "Name"))">
+            <option selected disabled>Choose Department</option>
+        </select>
+
+    </div>
+
+    <div class="form-group courses">
+        
+    </div>
+
+
+</div>
+
+@section Scripts {
+    
+    <script>
+     $(function () {
+
+         $('select').on('change', function (e) {
+             
+             $.ajax({
+                 url: "/Course/GetCoursesForDegree/"+e.target.value,
+                 success: function (result) {
+
+                     $('.courses').html(result);
+                },
+                type: "get"
+            });
+
+         });
+
+
+     })
+
+
+
+    </script>
+}

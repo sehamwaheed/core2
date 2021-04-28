@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Lab.Models.Course>
+
+
+<form method="post">
+    <table class="table table-hover table-bordered">
+
+        <thead>
+            <tr>
+                <td>course</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CourseName</td>
+                    <td>
+                        @Html.CheckBox("crs." + item.Id.ToString(), new { @class = "form-control" })
+                        @*<input class="form-control" type="checkbox" name="crs.@item.Id"/>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    <input type="submit" value="Save" class="btn btn-info" />
+
+</form>
+
